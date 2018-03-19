@@ -23,7 +23,7 @@
     <relativePath>../../hadoop-project</relativePath>
   </parent>
   <artifactId>hadoop-aws</artifactId>
-  <version>2.8.1</version>
+  <version>2.8.1-aws-1.10.75</version>
   <name>Apache Hadoop Amazon Web Services support</name>
   <description>
     This module contains code to support integration with Amazon Web Services.
@@ -298,22 +298,121 @@
     </plugins>
   </build>
 
+  <dependencyManagement>
+    <dependencies>
+
+      <!--
+  Since the parent pom declares the versions of the transitive dependencies as ${project.version} and
+  we want to keep them as 2.8.1 even though this particular module will be at 2.8.1-aws-1.10.75,
+  we must exclude the dependencies and include them manually with "2.8.1" instead of ${project.version}
+  -->
+
+      <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-common</artifactId>
+        <version>2.8.1</version>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-annotations</artifactId>
+        <version>2.8.1</version>
+        <scope>compile</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-auth</artifactId>
+        <version>2.8.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-mapreduce-client-common</artifactId>
+        <version>2.8.1</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-mapreduce-client-core</artifactId>
+        <version>2.8.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-mapreduce-client-shuffle</artifactId>
+        <version>2.8.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-yarn-client</artifactId>
+        <version>2.8.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-yarn-common</artifactId>
+        <version>2.8.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-yarn-api</artifactId>
+        <version>2.8.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-hdfs-client</artifactId>
+        <version>2.8.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-yarn-server-common</artifactId>
+        <version>2.8.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-yarn-server-nodemanager</artifactId>
+        <version>2.8.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-yarn-server-resourcemanager</artifactId>
+        <version>2.8.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-yarn-server-web-proxy</artifactId>
+        <version>2.8.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-build-tools</artifactId>
+        <version>2.8.1</version>
+      </dependency>
+
+    </dependencies>
+  </dependencyManagement>
+
   <dependencies>
-    <dependency>
-      <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-common</artifactId>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-common</artifactId>
-      <scope>test</scope>
-      <type>test-jar</type>
-    </dependency>
+    <!--
+     The parent POM declares another version, but we override it here to allow users to still fetch the normal
+     hadoop-project POM (parent) from Maven central
+     -->
     <dependency>
       <groupId>com.amazonaws</groupId>
       <artifactId>aws-java-sdk-s3</artifactId>
+      <version>1.10.75</version>
       <scope>compile</scope>
+    </dependency>
+
+    <!--We must force several versions below to 2.8.1 -->
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-common</artifactId>
+      <version>2.8.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-common</artifactId>
+      <version>2.8.1</version>
+      <scope>test</scope>
+      <type>test-jar</type>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -334,6 +433,7 @@
     <dependency>
       <groupId>com.amazonaws</groupId>
       <artifactId>aws-java-sdk-sts</artifactId>
+      <version>1.10.75</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -349,27 +449,32 @@
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-mapreduce-client-jobclient</artifactId>
+      <version>2.8.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-yarn-server-tests</artifactId>
+      <version>2.8.1</version>
       <scope>test</scope>
       <type>test-jar</type>
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
       <artifactId>hadoop-mapreduce-examples</artifactId>
+      <version>2.8.1</version>
       <scope>test</scope>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
+      <version>2.8.1</version>
       <artifactId>hadoop-distcp</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.hadoop</groupId>
+      <version>2.8.1</version>
       <artifactId>hadoop-distcp</artifactId>
       <scope>test</scope>
       <type>test-jar</type>
